@@ -38,6 +38,7 @@ DEFAULTS = {
     "MAIL_PORT": "587",
     "MAIL_USER": "",
     "MAIL_PASS": "",
+    "MAIL_PASS_FILE": "~/.config/mail/relay.pass",
     "MAIL_FROM": "",
 }
 
@@ -55,21 +56,44 @@ def _config():
 
 
 def get(name, default=None):
-    """config.py value, else $LLMWIKI_<name>, else the default."""
+    """config.py value, else $LLMWIKI_<name>, else the default.
+
+    MAIL_PASS additionally falls back to a 0600 file (MAIL_PASS_FILE, default
+    ~/.config/mail/relay.pass) so a cron job needs no environment at all.
+    """
     cfg = _config()
     if cfg is not None and getattr(cfg, name, None) not in (None, ""):
         return getattr(cfg, name)
     env = os.environ.get(f"LLMWIKI_{name}")
     if env not in (None, ""):
         return env
+    if name == "MAIL_PASS":
+        pw = _password_from_file()
+        if pw:
+            return pw
     if default is not None:
         return default
     return DEFAULTS.get(name, "")
 
 
+def _password_from_file():
+    """Read the mail password from the 0600 secret file (may not exist yet)."""
+    path = (os.environ.get("LLMWIKI_MAIL_PASS_FILE")
+            or DEFAULTS["MAIL_PASS_FILE"])
+    try:
+        with open(os.path.expanduser(path), encoding="utf-8") as f:
+            return f.read().strip()
+    except OSError:
+        return ""
+
+
 def is_configured(name):
-    """True when config.py or the environment supplies a non-default value."""
+    """True when config.py, the environment or the secret file supplies it."""
     cfg = _config()
     if cfg is not None and getattr(cfg, name, None) not in (None, ""):
         return True
-    return os.environ.get(f"LLMWIKI_{name}") not in (None, "")
+    if os.environ.get(f"LLMWIKI_{name}") not in (None, ""):
+        return True
+    if name == "MAIL_PASS" and _password_from_file():
+        return True
+    return False

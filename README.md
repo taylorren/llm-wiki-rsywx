@@ -144,7 +144,8 @@ variables:
 | `BLOG_URL` | `LLMWIKI_BLOG_URL` | Source blog, e.g. `https://blog.example.com` |
 | `BOOKS_BASE` | `LLMWIKI_BOOKS_BASE` | Book catalog prefix, e.g. `https://example.com/books` (posts link `.../books/02072.html`) |
 | `USER_AGENT` | `LLMWIKI_USER_AGENT` | User-Agent used when fetching |
-| `MAIL_HOST`, `MAIL_PORT`, `MAIL_USER`, `MAIL_PASS`, `MAIL_FROM` | `LLMWIKI_MAIL_*` | SMTP relay for `sync_posts.py --notify`; leave `MAIL_HOST` empty to disable |
+| `MAIL_HOST`, `MAIL_PORT`, `MAIL_USER`, `MAIL_PASS`, `MAIL_FROM` | `LLMWIKI_MAIL_*` | SMTP relay for `sync_posts.py --notify`; leave `MAIL_HOST` empty to disable. Prefer leaving `MAIL_PASS` unset and putting the secret in the file below |
+| — | `LLMWIKI_MAIL_PASS_FILE` | 0600 file holding just the SMTP password (default `~/.config/mail/relay.pass`), so cron needs no environment |
 | — | `LLMWIKI_MKDOCS` | Path to the `mkdocs` executable, if not in `.venv` or `$PATH` |
 
 Deployment uses `WIKI_SSH_HOST`, `WIKI_SSH_USER`, `WIKI_SSH_PORT`,

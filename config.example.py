@@ -18,7 +18,10 @@ USER_AGENT = "llm-wiki-sync/0.1 (+https://wiki.example.com)"
 BOOKS_BASE = "https://example.com/books"
 
 # --- cron notifications for tools/sync_posts.py --notify (optional) ---
-# Keep MAIL_HOST empty to disable notifications.
+# Keep MAIL_HOST empty to disable notifications. The password is best kept out
+# of this file entirely: put it in a 0600 file (default
+# ~/.config/mail/relay.pass, override with LLMWIKI_MAIL_PASS_FILE) and leave
+# MAIL_PASS unset -- cron then needs no environment at all.
 MAIL_HOST = ""
 MAIL_PORT = 587
 MAIL_USER = ""
