@@ -1,0 +1,44 @@
+site_name: My LLM Wiki
+site_description: 从博客归档中增量构建的个人知识库
+# Set your published URL (used for canonical links / sitemap).
+site_url: https://wiki.example.com
+# Optional licence line shown in every page footer, e.g.:
+# copyright: 内容采用 <a href="...">CC BY-NC-ND 4.0</a> 授权 · © 2004–2026 Your Name
+
+# Public build = staged copy in docs/ (created by tools/build_site.py).
+# Staged: the wiki layer, the root landing page, and any file mkdocs.yml
+# references under assets/. Raw sources (sources/, blog/) stay local.
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.tabs
+    - navigation.top
+    - navigation.indexes
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+plugins:
+  - search            # jieba is installed -> Chinese segmentation works
+
+nav:
+  - 首页: index.md
+  - 总览:
+      - wiki/index.md
+      # Add your topic pages here, one line each (see wiki/schema.md):
+      # - <page title>: wiki/pages/<your-page>.md
+  - 维护规范: wiki/schema.md
+  - 操作日志: wiki/log.md
+
+markdown_extensions:
+  - tables
+  - admonition
+  - footnotes
+  - toc:
+      permalink: "#"
+  - pymdownx.highlight
+  - pymdownx.superfences

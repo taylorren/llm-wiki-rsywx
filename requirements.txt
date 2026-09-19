@@ -1,0 +1,11 @@
+# Pinned dependencies for reproducible site builds.
+# Material for MkDocs 9.7.x is MIT-licensed; the MkDocs-2.0 deprecation warning
+# printed during builds targets future versions — do NOT blindly upgrade past
+# this pin (the plugin/theme systems are being rewritten in 2.0, no migration).
+# Re-pin deliberately after testing:  pip install -r requirements.txt
+mkdocs==1.6.1
+mkdocs-material==9.7.7
+mkdocs-material-extensions==1.3.1
+mkdocs-get-deps==0.2.2
+Markdown==3.10.3
+jieba==0.42.1

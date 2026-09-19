@@ -1,0 +1,57 @@
+/* Style overrides for llm-wiki sites.
+ *
+ * WHY THIS FILE EXISTS
+ * MkDocs Material sizes the header logo at 1.2rem, while the header row itself
+ * is 2.4rem tall (its height is set by .md-header__title, not by the logo).
+ * So by default the logo occupies only HALF the available row height -- you do
+ * not need to grow the header to get a bigger logo, you just stop wasting the
+ * space that is already there.
+ *
+ * TUNING
+ * Change --llmwiki-logo-size below. Anything <= 2.4rem changes nothing but the
+ * logo itself. To go TALLER than the row, see the commented block at the end.
+ * If you do not use a custom logo at all, delete the extra_css: entry from
+ * mkdocs.yml and this file along with it.
+ *
+ * Reference (Material 9.7.7; html font-size is 125%/137.5%/150% => 1rem is
+ * 20px to 24px depending on viewport):
+ *   header row  2.4rem  ->  48px .. 57.6px
+ *   logo        1.2rem  ->  24px .. 28.8px   (before this override)
+ */
+
+:root {
+  /* Matches the header row height, so the mark fills it edge to edge. */
+  --llmwiki-logo-size: 2.4rem;
+}
+
+/* Header: fill the existing row instead of using half of it. */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: var(--llmwiki-logo-size);
+  width: auto;
+}
+
+/* Drawer (mobile nav) title: keep the mark a little larger than in the header,
+ * mirroring Material's own 2.4rem-vs-1.2rem relationship. */
+.md-nav__title .md-nav__button.md-logo img,
+.md-nav__title .md-nav__button.md-logo svg {
+  height: calc(var(--llmwiki-logo-size) * 1.25);
+  width: auto;
+}
+
+/* ---------------------------------------------------------------------------
+ * ONLY if you want a mark TALLER than the 2.4rem row.
+ *
+ * This grows the header itself, which costs vertical space on every page (the
+ * header is position:sticky, so it always overlays content). Uncomment and set
+ * both values to the same height.
+ *
+ * .md-header__title {
+ *   height: 3.6rem;
+ *   line-height: 3.6rem;
+ * }
+ * .md-header__button.md-logo img,
+ * .md-header__button.md-logo svg {
+ *   height: 3.6rem;
+ * }
+ * ------------------------------------------------------------------------ */
